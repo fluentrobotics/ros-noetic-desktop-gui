@@ -1,8 +1,22 @@
-
-FROM osrf/ros:noetic-desktop-full
+FROM nvidia/cuda:11.8.0-cudnn8-devel-ubuntu20.04
 
 ARG DEBIAN_FRONTEND=noninteractive
 ENV TZ=America/Detroit
+
+# Install ROS Noetic. There might be a more elegant way of doing this using
+# multi-stage builds.
+RUN apt-get update && apt-get install --yes curl
+RUN curl -s https://raw.githubusercontent.com/ros/rosdistro/master/ros.asc | apt-key add -
+RUN echo "deb http://packages.ros.org/ros/ubuntu focal main" > /etc/apt/sources.list.d/ros-latest.list
+RUN apt-get update && apt-get install --yes \
+    ros-noetic-desktop-full \
+    build-essential \
+    python3-rosdep \
+    python3-rosinstall \
+    python3-rosinstall-generator \
+    python3-vcstools \
+    python3-wstool
+RUN rosdep init && rosdep update
 
 # Install commonly-used development tools.
 RUN apt-get update && apt-get install --yes \
