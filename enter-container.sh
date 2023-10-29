@@ -60,9 +60,9 @@ args=(
     --workdir="$HOME"
 
     # Enable NVIDIA GPUs in the container (doc/nvidia.md)
-    # --runtime=nvidia
-    # --gpus all
-    # --env NVIDIA_DRIVER_CAPABILITIES="all"
+    --runtime=nvidia
+    --gpus all
+    --env NVIDIA_DRIVER_CAPABILITIES="all"
 
     # The Docker image and command we want to run in the container always need
     # to be the last two arguments.
